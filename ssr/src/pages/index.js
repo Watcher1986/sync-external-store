@@ -1,5 +1,4 @@
-import { useSyncExternalStore, createContext, useContext } from 'react';
-import store from '../store';
+import store, { ServerContext, useStore } from '../store';
 
 export function getServerSideProps() {
   return {
@@ -11,15 +10,6 @@ export function getServerSideProps() {
     },
   };
 }
-
-const ServerContext = createContext();
-
-const useStore = (selector = (state) => state) =>
-  useSyncExternalStore(
-    store.subscribe,
-    () => selector(store.getState()),
-    () => selector(useContext(ServerContext))
-  );
 
 const IncrementValue = ({ item }) => (
   <button
